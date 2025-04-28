@@ -1,0 +1,302 @@
+import unittest
+
+# Function to calculate factorial
+def factorial(n):
+    if n < 0:
+        raise ValueError("Factorial is not defined for negative numbers.")
+    if n == 0:
+        return 1
+    result = 1
+    for i in range(1, n + 1):
+        result *= i
+    return result
+
+# Test case for the factorial function
+class TestFactorial(unittest.TestCase):
+
+    def test_positive_numbers(self):
+        test_values = [1, 5, 10]
+        print(f"\nTesting factorial for positive numbers: {test_values}")
+        self.assertEqual(factorial(1), 1)
+        self.assertEqual(factorial(5), 120)
+        self.assertEqual(factorial(10), 3628800)
+
+    def test_zero(self):
+        print("\nTesting factorial for zero: [0]")
+        self.assertEqual(factorial(0), 1)
+
+    def test_negative_numbers(self):
+        test_values = [-1, -10]
+        print(f"\nTesting factorial for negative numbers (should raise ValueError): {test_values}")
+        with self.assertRaises(ValueError):
+            factorial(-1)
+        with self.assertRaises(ValueError):
+            factorial(-10)
+
+if __name__ == "__main__":
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+
+
+
+
+
+
+
+import unittest
+
+# Function to check if a string is a palindrome
+def is_palindrome(s):
+    return s == s[::-1]
+
+# Test case for the palindrome function
+class TestIsPalindrome(unittest.TestCase):
+
+    def test_even_length(self):
+        test_values = ["abba", "1221"]
+        print(f"\nTesting is_palindrome for even length strings: {test_values}")
+        self.assertTrue(is_palindrome("abba"))
+        self.assertTrue(is_palindrome("1221"))
+
+    def test_odd_length(self):
+        test_values = ["racecar", "madam"]
+        print(f"\nTesting is_palindrome for odd length strings: {test_values}")
+        self.assertTrue(is_palindrome("racecar"))
+        self.assertTrue(is_palindrome("madam"))
+
+    def test_non_palindrome(self):
+        test_values = ["hello", "world"]
+        print(f"\nTesting is_palindrome for non-palindrome strings: {test_values}")
+        self.assertFalse(is_palindrome("hello"))
+        self.assertFalse(is_palindrome("world"))
+
+    def test_special_characters(self):
+        test_values_true = ["!@##@!"]
+        test_values_false = ["!@#a@!"]
+        print(f"\nTesting is_palindrome for special character strings, expecting True: {test_values_true}")
+        print(f"Testing is_palindrome for special character strings, expecting False: {test_values_false}")
+        self.assertTrue(is_palindrome("!@##@!"))
+        self.assertFalse(is_palindrome("!@#a@!"))
+
+if __name__ == "__main__":
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+
+
+
+
+
+
+
+
+
+
+import unittest
+
+# Function to check if a number is prime
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5)+1):
+        if n % i == 0:
+            return False
+    return True
+
+# Test case for the prime checking function
+class TestIsPrime(unittest.TestCase):
+
+    def test_prime_numbers(self):
+        test_values = [2, 3, 17, 97]
+        print(f"\nTesting is_prime for prime numbers: {test_values}")
+        self.assertTrue(is_prime(2))
+        self.assertTrue(is_prime(3))
+        self.assertTrue(is_prime(17))
+        self.assertTrue(is_prime(97))
+
+    def test_non_prime_numbers(self):
+        test_values = [1, 0, 4, 100]
+        print(f"\nTesting is_prime for non-prime numbers: {test_values}")
+        self.assertFalse(is_prime(1))
+        self.assertFalse(is_prime(0))
+        self.assertFalse(is_prime(4))
+        self.assertFalse(is_prime(100))
+
+    def test_negative_numbers(self):
+        test_values = [-5, -13]
+        print(f"\nTesting is_prime for negative numbers: {test_values}")
+        self.assertFalse(is_prime(-5))
+        self.assertFalse(is_prime(-13))
+
+if __name__ == "__main__":
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+
+
+
+
+
+
+
+
+import unittest
+
+# Function to sort a list in ascending order
+def sort_list(lst):
+    return sorted(lst)
+
+# Test case for the sort list function
+class TestSortList(unittest.TestCase):
+
+    def test_sorted_list(self):
+        test_values = [3, 1, 4, 1, 5]
+        expected = [1, 1, 3, 4, 5]
+        print(f"\nTesting sort_list with list: {test_values}")
+        self.assertEqual(sort_list(test_values), expected)
+
+    def test_empty_list(self):
+        test_values = []
+        print(f"\nTesting sort_list with empty list: {test_values}")
+        self.assertEqual(sort_list(test_values), [])
+
+    def test_single_element(self):
+        test_values = [10]
+        print(f"\nTesting sort_list with single element list: {test_values}")
+        self.assertEqual(sort_list(test_values), [10])
+
+    def test_negative_numbers(self):
+        test_values = [5, -1, 0, 2]
+        expected = [-1, 0, 2, 5]
+        print(f"\nTesting sort_list with list containing negatives: {test_values}")
+        self.assertEqual(sort_list(test_values), expected)
+
+if __name__ == "__main__":
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+
+
+
+
+
+
+
+import unittest
+
+# Function to calculate the sum of all elements in a nested list
+def sum_nested_list(lst):
+    total = 0
+    for item in lst:
+        if isinstance(item, list):
+            total += sum_nested_list(item)
+        else:
+            total += item
+    return total
+
+
+
+
+
+
+# Test case for the sum nested list function
+class TestSumNestedList(unittest.TestCase):
+
+    def test_simple_nesting(self):
+        test_value = [1, [2, 3], 4]
+        print(f"\nTesting sum_nested_list with simple nesting: {test_value}")
+        self.assertEqual(sum_nested_list(test_value), 10)
+
+    def test_deep_nesting(self):
+        test_value = [1, [2, [3, 4]], 5]
+        print(f"\nTesting sum_nested_list with deep nesting: {test_value}")
+        self.assertEqual(sum_nested_list(test_value), 15)
+
+    def test_negative_numbers(self):
+        test_value = [-1, [-2, [-3, 4]]]
+        print(f"\nTesting sum_nested_list with negative numbers: {test_value}")
+        self.assertEqual(sum_nested_list(test_value), -2)
+
+    def test_empty_list(self):
+        test_value = []
+        print(f"\nTesting sum_nested_list with an empty list: {test_value}")
+        self.assertEqual(sum_nested_list(test_value), 0)
+
+    def test_single_deep_value(self):
+        test_value = [[[[1]]]]
+        print(f"\nTesting sum_nested_list with a deeply nested single value: {test_value}")
+        self.assertEqual(sum_nested_list(test_value), 1)
+
+if __name__ == "__main__":
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+
+
+
+
+
+
+
+
+
+
+git
+
+
+git init
+git remote add origin <repository-URL>
+git add <file-name>         # To stage specific files
+git add .                   # To stage all files in the directory
+git commit -m "Your commit message"
+git push -u origin <branch>
+
+
+
+
+
+
+
+
+# Install if needed
+# pip install tpot pandas scikit-learn
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from tpot import TPOTClassifier
+
+# STEP 1: Load your Wine Quality dataset
+# Change 'winequality.csv' to your actual file name if different
+data = pd.read_csv('winequality_FS.csv')
+
+# STEP 2: Split features and target
+X = data.drop('quality', axis=1)   # Features
+y = data['quality']                # Target (what we want to predict)
+
+# STEP 3: Split into Train and Test datasets
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# STEP 4: Create and Train TPOT Classifier
+tpot = TPOTClassifier(
+    generations=5,          # Try increasing for better models (e.g., 10 or 20)
+    population_size=50,     # Number of models tried per generation
+    verbosity=2,            # Shows what's happening
+    random_state=42,
+    n_jobs=-1               # Use all CPU cores
+)
+
+tpot.fit(X_train, y_train)
+
+# STEP 5: Evaluate the model
+print(f"Test Accuracy: {tpot.score(X_test, y_test)}")
+
+# STEP 6: Export the best pipeline to a Python file
+tpot.export('best_wine_quality_pipeline.py')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
