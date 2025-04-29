@@ -1,0 +1,57 @@
+# Use Python base image
+FROM python:3.9-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy your script into the container
+COPY linear_regression.py .
+
+# Install required Python packages
+RUN pip install pandas scikit-learn joblib numpy
+
+# Run the script when the container starts
+CMD ["python", "linear_regression.py"]
+
+
+
+
+# linear_regression.py
+
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+import joblib
+import numpy as np
+
+# Sample dataset (predict y from x)
+data = pd.DataFrame({
+    'x': [1, 2, 3, 4, 5],
+    'y': [2, 4, 5, 4, 5]
+})
+
+# Split features and target
+X = data[['x']]
+y = data['y']
+
+# Train model
+model = LinearRegression()
+model.fit(X, y)
+
+# Save model
+joblib.dump(model, 'model.pkl')
+
+# Load model and predict new values
+model = joblib.load('model.pkl')
+X_new = np.array([[6], [7], [8]])
+predictions = model.predict(X_new)
+
+print("Predictions for input [6, 7, 8]:", predictions)
+
+
+
+
+docker build -t linear-regression-container .
+
+
+
+docker run linear-regression-container
