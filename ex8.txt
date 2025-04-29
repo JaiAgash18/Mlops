@@ -1,0 +1,24 @@
+import random, time, logging, mlflow
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger()
+
+def generate_data():
+    with mlflow.start_run():
+        mlflow.log_params({'app_name': 'MyApp', 'version': '1.0'})
+        start = time.time()
+        try:
+            while True:
+                data = random.randint(0, 100)
+                logger.info(f"Data: {data}")
+                mlflow.log_metrics({'my_metric': data, 'uptime': time.time() - start})
+                time.sleep(2)
+        except KeyboardInterrupt:
+            logger.info("Stopped.")
+        finally:
+            mlflow.end_run()
+
+if __name__ == "__main__":
+    logger.info("App Started.")
+    generate_data()
+    logger.info("App Stopped.")
